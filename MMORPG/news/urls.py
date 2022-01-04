@@ -1,4 +1,5 @@
 from django.urls import path
-from .views import NewsList
+from .views import PostList, PostDetail
 
-urlpatterns = [path('', NewsList.as_view())]
+urlpatterns = [path('', PostList.as_view()),
+               path('<int:pk>/', PostDetail.as_view())]

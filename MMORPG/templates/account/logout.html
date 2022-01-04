@@ -1,0 +1,21 @@
+{% extends 'MMORPG/flatpages/default.html' %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block content %}
+<br><br><br>
+<h1>{% trans "Выход" %}</h1>
+
+<p>{% trans 'Вы действительно хотите выйти из аккаунта' %}</p>
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button type="submit" class="btn btn btn-danger btn-lg">{% trans 'Выход' %}</button>
+</form>
+
+{% endblock %}
