@@ -5,18 +5,21 @@ from django.contrib.auth.models import User
 class Author(models.Model):
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.authorUser}'
+
 
 class Post(models.Model):
-    Tank = 'TK'
-    Heal = 'HL'
-    DD = 'DD'
-    SELLERS = 'SL'
-    GILDMASTERS = 'GM'
-    KVESTGRS = 'KG'
-    BLACKSMITHS = 'BS'
-    LEATHERWRKS = 'LW'
-    CHEMISTS = 'CH'
-    SPELLMASTERS = 'SM'
+    Tank = 'Танк'
+    Heal = 'Хиллы'
+    DD = 'ДД'
+    SELLERS = 'Торговцы'
+    GILDMASTERS = 'Гилдмастеры'
+    KVESTGRS = 'Квестгиверы'
+    BLACKSMITHS = 'Кузнецы'
+    LEATHERWRKS = 'Кожевники'
+    CHEMISTS = 'Зельевары'
+    SPELLMASTERS = 'Мастера Заклинаний'
     CATEGORY_CHOICES = [
         (Tank, 'Танк'),
         (Heal, 'Хиллы'),
@@ -36,11 +39,16 @@ class Post(models.Model):
     category = models.CharField(choices=CATEGORY_CHOICES,
                                 default='Tank',
                                 verbose_name='Category',
-                                max_length=2
+                                max_length=18
                                 )
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.title}:{self.text}'
+
+    def preview(self):
+        return {self.text}[0:30]+'...'
 
 class Comment(models.Model):
     user_comment = models.ForeignKey(User, on_delete=models.CASCADE)

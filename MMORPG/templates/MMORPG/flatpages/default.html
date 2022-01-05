@@ -28,8 +28,8 @@
         </ul>
 
 {% if request.user.is_authenticated %}
-        <div class="nav col-12 col-lg-auto me-lg-auto  justify-content-center ">
-          <h1>{{request.user.email}}</h1>
+        <div class="nav col-12 mt-2 col-lg-auto me-lg-auto  justify-content-center ">
+          <h2>{{request.user.email}}</h2>
         </div>
         <div class="text-end">
           <button onclick="window.location.href = '/accounts/logout/'" type="button" class="btn btn-warning">Выйти</button>
