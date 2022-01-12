@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import *
 from django.shortcuts import render
-# Create your views here.
 
 
 class PostDetail(DetailView):

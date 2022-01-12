@@ -47,8 +47,6 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}:{self.text}'
 
-    def preview(self):
-        return {self.text}[0:30]+'...'
 
 class Comment(models.Model):
     user_comment = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -56,8 +54,3 @@ class Comment(models.Model):
     post_comment = models.ForeignKey(Post, on_delete=models.CASCADE)
     time_comment = models.DateTimeField(auto_now_add=True)
 
-
-
-
-
-# Create your models here.
