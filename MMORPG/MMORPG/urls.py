@@ -24,4 +24,5 @@ urlpatterns = [
     path('pages/', include('django.contrib.flatpages.urls')),
     path('', lambda request: redirect('home/', permanent=False)),
     path('accounts/', include('allauth.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
