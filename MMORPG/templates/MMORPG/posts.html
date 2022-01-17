@@ -9,7 +9,7 @@
   <div class="card-body text-dark">
     <h5 class="card-title display-6 ">{{post.title}}</h5>
       <hr>
-    <p class="card-text"><h5>{{post.text|truncatechars:128}}</h5></p>
+    <p class="card-text"><h5>{{post.text|truncatechars:128|safe}}</h5></p>
   </div>
     <div class="card-header h6 bg-dark text-center text-light ">
         Автор: <font color="yellow">{{ post.author }} </font> --
@@ -17,9 +17,34 @@
         Категория поста: {{ post.category }}
     </div>
 </div>
-
-
-
-
     {% endfor %}
+
+{% if is_paginated %}
+<nav aria-label="..." class="d-flex justify-content-center">
+  <ul class="pagination">
+
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+        </li>
+      {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><a class="page-link text-dark" href="?page={{ num }}">{{ num }}</a></li>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <li class="page-item "><a class="page-link text-dark" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+      </li>
+    {% endif %}
+      </li>
+  </ul>
+</nav>
+  {%endif%}
+
 {% endblock content %}
