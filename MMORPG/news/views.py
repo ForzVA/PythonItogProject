@@ -15,3 +15,4 @@ class PostList(ListView):
     template_name = 'MMORPG/posts.html'
     context_object_name = 'posts'
     ordering = ['-id']
+    paginate_by = 3
