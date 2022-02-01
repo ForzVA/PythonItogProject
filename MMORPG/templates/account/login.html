@@ -7,23 +7,23 @@
 
 {% block content %}
 <title> Вход в аккаунт </title>
-<div align="center">
+<div>
   <h1>{% trans "Вход" %}</h1>
 
   {% get_providers as socialaccount_providers %}
 
   {% if socialaccount_providers %}
-  <p>{% blocktrans with site.name as site_name %}Please sign in with one
-  of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-  for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+  <p style="width:200px; margin-left: auto; margin-right: auto; max-width: 200px">{% blocktrans with site.name as site_name %}Пожалуйста, войдите с помощью одной из ваших существующих
+        сторонних учетных записей.Или <a href="{{ signup_url }}"> зарегистрируйте </a> учетную запись
+        на {{ site_name }}, а так же войдите с помощью: {% endblocktrans %}</p>
 
   <div class="socialaccount_ballot">
 
-    <ul class="socialaccount_providers">
+    <ul class="socialaccount_providers" style="list-style-type: none;">
       {% include "socialaccount/snippets/provider_list.html" with process="login" %}
     </ul>
 
-    <div class="login-or">{% trans 'or' %}</div>
+    <div class="login-or">{% trans 'или' %}</div>
 
   </div>
 
