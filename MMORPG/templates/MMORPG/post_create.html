@@ -1,0 +1,18 @@
+{% extends 'MMORPG/flatpages/default.html' %}
+
+
+{% block title %}
+Создание поста
+{% endblock title %}
+
+{% block content %}
+<div style="padding: 30px 300px">
+    <h3> Создание поста </h3>
+<form method="POST" style="align: center">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form }}
+    <input type="submit" value="Добавить пост" class="btn btn-info" style="margin: 10px">
+</form>
+</div>
+{% endblock content %}
