@@ -1,0 +1,31 @@
+{% extends 'MMORPG/flatpages/default.html' %}
+
+
+{% block title %}
+Создание комментария
+{% endblock title %}
+
+{% block content %}
+<div style="padding: 30px 300px">
+    <div class="card border-dark mb-5 mt-4 mb-3 shadow bg-body rounded" style="max-width: 80rem;">
+        <div class="card-body text-dark">
+            <h5 class="card-title display-6"><a href="{% url 'post_detail' post.id %}" style="text-decoration: none;"> {{post.title}} </a></h5>
+              <hr>
+            <p class="card-text"><h5>{{post.text}}</h5></p>
+        </div>
+
+        <div class="card-header h6 bg-dark text-center text-light " style='border-bottom: 0px;'>
+            Автор: <font color="yellow">{{ post.author }} </font> --
+            Дата создания: {{ post.date_creation|date:'d/m/Y' }} --
+            Категория поста: {{ post.category }}
+        </div>
+    </div>
+    <h3> Создание комментария </h3>
+    <form method="POST" style="align: center">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form }}
+        <input type="submit" value="Добавить пост" class="btn btn-info" style="margin: 10px">
+    </form>
+</div>
+{% endblock content %}

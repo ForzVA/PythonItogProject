@@ -21,8 +21,10 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('news.urls')),
+
+
     path('pages/', include('django.contrib.flatpages.urls')),
-    path('', lambda request: redirect('home/', permanent=False)),
+    path('', lambda request: redirect('home/', permanent=False), name='home_page'),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
