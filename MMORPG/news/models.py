@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from pkg_resources import UnknownExtra
+from .middleware import get_current_user
+from django.db.models import Q
 
 
 
@@ -61,12 +64,29 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
 
 
+class StatusComments(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(Q(status_comment=False, user_comment=get_current_user()) |
+                                             Q(status_comment=False, post_comment__author=get_current_user()) |
+                                             Q(status_comment=True)
+                                             )
+
+
 class Comment(models.Model):
-    user_comment = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_comment = models.ForeignKey(User,
+                                     on_delete=models.CASCADE,
+                                     verbose_name='Автор комментария')
     text_comment = models.TextField(verbose_name='Текст коммента')
-    post_comment = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments_posts')
-    time_comment = models.DateTimeField(auto_now_add=True)
-    status_comment = models.BooleanField(verbose_name='Статус коммента', default=False)
+    post_comment = models.ForeignKey(Post,
+                                     on_delete=models.CASCADE,
+                                     related_name='comments_posts',
+                                     verbose_name='Комментируемый пост')
+    time_comment = models.DateTimeField(auto_now_add=True,
+                                        verbose_name='Дата комментария')
+    status_comment = models.BooleanField(verbose_name='Статус коммента',
+                                         default=False,
+                                        )
+    objects = StatusComments()
 
     def __str__(self):
         return f'{self.user_comment}{self.time_comment}'

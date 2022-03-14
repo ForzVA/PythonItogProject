@@ -20,14 +20,22 @@
     </div>
 </div>
 
+{% if messages %}
+<div class="alert alert-success">
+  {% for msg in messages%}
+    {{msg}}
+  {% endfor %}
+</div>
+{% endif %}
 <p style="text-align:left"> Комментарии ({{post.comments_posts.all.count }}) </p>
 
 {% for comment in post.comments_posts.all %}
-<div class="card border-dark mb-1 mt-1 mb-3 shadow rounded" style="text-align:left; padding-left: 10px;">
+<div class="card border-dark mb-1 mt-1 mb-3 shadow rounded " style="text-align:left; padding-left: 10px;">
     {{comment.text_comment}} <br>
     <nobr style="text-align:right; padding-right:5px">
         Автор:<font color="blue">{{comment.user_comment}}</font>
         || {{comment.time_comment|date:'d/m/Y'}}
+        || Статус комментария: {{comment.status_comment}}
     </nobr>
 </div>
 

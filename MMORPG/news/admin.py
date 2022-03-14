@@ -22,6 +22,7 @@ class CommentAdminForm(forms.ModelForm):
         model = Comment
         fields = ('user_comment', 'text_comment', 'post_comment',)
 
+
 class CommentAdmin(admin.ModelAdmin):
     form = CommentAdminForm
 

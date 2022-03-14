@@ -1,3 +1,5 @@
+from multiprocessing import context
+from re import template
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, TemplateView
 from django.views.generic.edit import FormMixin
@@ -10,16 +12,30 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from .filters import ResponseFilter
 
 
-class PostDetail(LoginRequiredMixin, DetailView, FormMixin):
+class SuccessMessageMixin:
+    @property
+    def success_msg(self):
+        return False
+
+    def form_valid(self, form):
+        messages.success(self.request, self.success_msg)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return '%s?id=%s' % (self.success_url, self.object.id)
+
+
+class PostDetail(LoginRequiredMixin, SuccessMessageMixin, DetailView, FormMixin ):
     model = Post
     template_name = 'MMORPG/post_detail.html'
     context_object_name = 'post'
     form_class = CommentForm
+    success_msg = 'Комментарий успешно создан, ожидайте модерации'
 
     def get_success_url(self, **kwargs):
-        print(self.get_object().id)
         return reverse_lazy('post_detail', kwargs={'pk': self.get_object().id})
 
     def post(self, request, *args, **kwargs):
@@ -37,25 +53,12 @@ class PostDetail(LoginRequiredMixin, DetailView, FormMixin):
         return super().form_valid(form)
 
 
-class SuccessMessageMixin:
-    @property
-    def success_msg(self):
-        return False
-
-    def form_valid(self, form):
-        messages.success(self.request, self.success_msg)
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return '%s?id=%s' % (self.success_url, self.object.id)
-
-
 class PostList(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'MMORPG/posts.html'
     context_object_name = 'posts'
     ordering = ['-id']
-    paginate_by = 3
+    paginate_by = 5
 
 
 class PostCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -121,7 +124,18 @@ class PostEdit(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CommentCreate(LoginRequiredMixin, View):
+class PostResponses(LoginRequiredMixin, TemplateView):
+    template_name = 'MMORPG/post_responses.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_comments'] = Comment.objects.all().order_by('-time_comment')
+        context['filter'] = ResponseFilter(self.request.GET)
+        return context
+
+
+class CommentCreate(LoginRequiredMixin, View, SuccessMessageMixin ):
+
     def get(self, request, **kwargs):
         form = CommentForm
         post = Post.objects.get(pk=id)
@@ -131,7 +145,27 @@ class CommentCreate(LoginRequiredMixin, View):
             'post': post
         }
 
-        return render(request, 'newsboard/comment_create.html', context)
+        return render(request, context)
+
+
+def update_status_comment(request, pk, type):
+    item = Comment.objects.get(pk=pk)
+    if request.user != item.post_comment.author:
+        return HttpResponse('Не лезь! Не твоё!')
+    if type == 'public':
+        item.status_comment = not item.status_comment
+        item.save()
+        template = 'MMORPG/сomment_instance.html'
+        context = {'comment':item, 'status_comment':'Статус комментария изменен'}
+        return render(request, template, context)
+    elif type == 'delete':
+        item.delete()
+        return HttpResponse('''
+        <td class="alert alert-success">
+          Комментарий удален
+        </td>
+''')
+
 
 # def post_edit(request):
 #     template = 'MMORPG/post_edit.html'

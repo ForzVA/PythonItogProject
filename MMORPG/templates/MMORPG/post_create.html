@@ -12,7 +12,7 @@
     {% else %}
     <h3> Создание поста: </h3>
     {% endif %}
-<form method="POST" style="align: center">
+<form method="POST">
     {% csrf_token %}
     {{ form.media }}
     {{ form }}
