@@ -155,7 +155,7 @@ def update_status_comment(request, pk, type):
     if type == 'public':
         item.status_comment = not item.status_comment
         item.save()
-        template = 'MMORPG/сomment_instance.html'
+        template = 'MMORPG/comment_instance.html'
         context = {'comment':item, 'status_comment':'Статус комментария изменен'}
         return render(request, template, context)
     elif type == 'delete':
