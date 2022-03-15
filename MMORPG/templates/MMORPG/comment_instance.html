@@ -2,7 +2,7 @@
 
 
     <td>{{comment.post_comment.title}}</td>
-    <td>{{comment.post_comment.author}}</td>
+    <td>{{comment.user_comment}}</td>
     <td><a href="#" style="text-decoration: none;"> {{comment.text_comment}} </a></td>
     <td>{{comment.time_comment|date:'d.m.Y'}}</td>
     <td>{% if comment.status_comment %}
