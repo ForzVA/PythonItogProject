@@ -29,7 +29,7 @@
 
       {% if request.user == comment.post_comment.author %}
         <tr {% if post.id|slugify == request.GET.id %} style="background:yellow" {% endif%}>         
-            {% include 'MMORPG/сomment_instance.html' %}
+            {% include 'MMORPG/comment_instance.html' %}
         </tr>
       {%endif%}
 
