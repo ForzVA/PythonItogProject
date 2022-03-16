@@ -15,7 +15,7 @@
   <thead>
     <tr>
       <th scope="col">Название статьи</th>
-      <th scope="col">Автор статьи</th>
+      <th scope="col">Автор комментария</th>
       <th scope="col">Комментарий</th>
       <th scope="col">Дата создания</th>
       <th scope="col">Статус комментария</th>
@@ -28,8 +28,8 @@
     {%for comment in filter.qs%}
 
       {% if request.user == comment.post_comment.author %}
-        <tr {% if post.id|slugify == request.GET.id %} style="background:yellow" {% endif%}>         
-            {% include 'MMORPG/сomment_instance.html' %}
+        <tr {% if post.id|slugify == request.GET.id %} style="background:yellow;" {% endif%}>         
+            {% include 'MMORPG/comment_instance.html' %}
         </tr>
       {%endif%}
 
