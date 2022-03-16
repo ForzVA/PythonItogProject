@@ -28,7 +28,7 @@
     {%for comment in filter.qs%}
 
       {% if request.user == comment.post_comment.author %}
-        <tr {% if post.id|slugify == request.GET.id %} style="background:yellow;" {% endif%}>         
+        <tr {% if post.id|slugify == request.GET.id %} style="background:yellow" {% endif %}>         
             {% include 'MMORPG/comment_instance.html' %}
         </tr>
       {%endif%}
