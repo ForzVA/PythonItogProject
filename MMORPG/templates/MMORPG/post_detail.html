@@ -5,49 +5,54 @@
 {% endblock title %}
 
 {% block content %}
-
-<div class="card border-dark mb-5 mt-4 mb-3 shadow bg-body rounded" style="max-width: 80rem;">
+  <div class="card border-dark mb-5 mt-4 mb-3 shadow bg-body rounded" style="max-width: 80rem;">
     <div class="card-body text-dark">
-        <h5 class="card-title display-6"><a href="{% url 'post_detail' post.id %}" style="text-decoration: none;"> {{post.title}} </a></h5>
-          <hr>
-        <p class="card-text"><h5>{{post.text|safe}}</h5></p>
+      <h5 class="card-title display-6">
+        <a href="{% url 'post_detail' post.id %}" style="text-decoration: none;">
+          {{post.title}} 
+        </a>
+      </h5>
+
+      <hr>
+      <p class="card-text"><h5>{{post.text|safe}}</h5></p>
     </div>
 
     <div class="card-header h6 bg-dark text-center text-light " style='border-bottom: 0px;'>
-        Автор: <font color="yellow">{{ post.author }} </font> --
-        Дата создания: {{ post.date_creation|date:'d/m/Y' }} --
-        Категория поста: {{ post.category }}
+      Автор: <font color="yellow">{{ post.author }} </font> --
+      Дата создания: {{ post.date_creation|date:'d/m/Y' }} --
+      Категория поста: {{ post.category }}
     </div>
-</div>
+  </div>
 
-{% if messages %}
-<div class="alert alert-success">
-  {% for msg in messages%}
-    {{msg}}
+  {% if messages %}
+    <div class="alert alert-success">
+      {% for msg in messages%}
+        {{msg}}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <p style="text-align:left"> Комментарии ({{post.comments_posts.all.count }}) </p>
+
+  {% for comment in post.comments_posts.all %}
+    <div class="card border-dark mb-1 mt-1 mb-3 shadow rounded " style="text-align:left; padding-left: 10px;">
+        {{comment.text_comment}} <br>
+        <nobr style="text-align:right; padding-right:5px">
+            Автор:<font color="blue">{{comment.user_comment}}</font>
+            || {{comment.time_comment|date:'d/m/Y'}}
+            || Статус комментария: {{comment.status_comment}}
+        </nobr>
+    </div>
   {% endfor %}
-</div>
-{% endif %}
-<p style="text-align:left"> Комментарии ({{post.comments_posts.all.count }}) </p>
-
-{% for comment in post.comments_posts.all %}
-<div class="card border-dark mb-1 mt-1 mb-3 shadow rounded " style="text-align:left; padding-left: 10px;">
-    {{comment.text_comment}} <br>
-    <nobr style="text-align:right; padding-right:5px">
-        Автор:<font color="blue">{{comment.user_comment}}</font>
-        || {{comment.time_comment|date:'d/m/Y'}}
-        || Статус комментария: {{comment.status_comment}}
-    </nobr>
-</div>
-
-{% endfor %}
-<hr>
-</div>
-<div style="width: 45%">
+  <hr>
+  </div>
+  
+  <div style="width: 45%">
     <form action="" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Добавить Комментарий" class="btn btn-info" style="margin: 15px 0px">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Добавить Комментарий" class="btn btn-info" style="margin: 15px 0px">
     </form>
-</div>
+  </div>
 
 {% endblock content %}

@@ -1,60 +1,61 @@
 {% extends 'MMORPG/flatpages/default.html' %}
+
 {% block title %}
-Отклики
+  Отклики
 {% endblock title %}
 
 {% block content %}
-<h2>Отклики к моим новостям:</h2>
+  <h2>Отклики к моим новостям:</h2>
 
-<form method="GET" class="form-control" style="border: 2px solid orange;">
-  {{ filter.form}}
-  <input type="submit" value="Найти" class="btn btn-primary btn-sm" style="margin-left: 25px;">
-</form>
+  <form method="GET" class="form-control" style="border: 2px solid orange;">
+    {{ filter.form}}
+    <input type="submit" value="Найти" class="btn btn-primary btn-sm" style="margin-left: 25px;">
+  </form>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Название статьи</th>
-      <th scope="col">Автор статьи</th>
-      <th scope="col">Комментарий</th>
-      <th scope="col">Дата создания</th>
-      <th scope="col">Статус комментария</th>
-      <th scope="col">Опубликовать</th>
-      <th scope="col">Удалить</th>
-    </tr>
-  </thead>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Название статьи</th>
+        <th scope="col">Автор статьи</th>
+        <th scope="col">Комментарий</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Статус комментария</th>
+        <th scope="col">Опубликовать</th>
+        <th scope="col">Удалить</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    {%for comment in filter.qs%}
+    <tbody>
+      {%for comment in filter.qs%}
 
-      {% if request.user == comment.post_comment.author %}
-        <tr {% if post.id|slugify == request.GET.id %} style="background:yellow" {% endif%}>         
-            {% include 'MMORPG/comment_instance.html' %}
-        </tr>
-      {%endif%}
+        {% if request.user == comment.post_comment.author %}
+          <tr {% if post.id|slugify == request.GET.id %} style="background:yellow" {% endif%}>         
+              {% include 'MMORPG/comment_instance.html' %}
+          </tr>
+        {%endif%}
 
-    {% endfor %}   
-  </tbody>
-</table>
+      {% endfor %}   
+    </tbody>
+  </table>
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $('.update_status').click(function(){
-        if (confirm("Вы уверены?")){
-        var url = $(this).attr('data-url')
-        var tag_td = $(this).parent().parent()
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $('.update_status').click(function(){
+          if (confirm("Вы уверены?")){
+          var url = $(this).attr('data-url')
+          var tag_td = $(this).parent().parent()
 
-        $.ajax({
-            url:url,
-            type: "GET",
-            success: function(response){
-                console.log(tag_td.html())
-                tag_td.html(response)
-                }
-               })
-        }
-        })
-</script>
+          $.ajax({
+              url:url,
+              type: "GET",
+              success: function(response){
+                  console.log(tag_td.html())
+                  tag_td.html(response)
+                  }
+                })
+          }
+          })
+  </script>
 {% endblock %}

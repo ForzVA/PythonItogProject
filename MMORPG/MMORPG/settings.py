@@ -160,6 +160,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none' #mandatory
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'ma1ltest.mail'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'csyprkmskwtbjcsk'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'ma1ltest.mail@yandex.by'

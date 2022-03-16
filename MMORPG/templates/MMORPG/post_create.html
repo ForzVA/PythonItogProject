@@ -2,21 +2,22 @@
 
 
 {% block title %}
-Создание поста
+  Создание поста
 {% endblock title %}
 
 {% block content %}
-<div style="padding: 30px 300px">
-    {% if update %}
-    <h3>Редактирование поста:</h3>
-    {% else %}
-    <h3> Создание поста: </h3>
-    {% endif %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.media }}
-    {{ form }}
-    <input type="submit" value="Добавить пост" class="btn btn-info" style="margin: 10px">
-</form>
-</div>
+  <div style="padding: 30px 300px">
+      {% if update %}
+        <h3>Редактирование поста:</h3>
+      {% else %}
+        <h3> Создание поста: </h3>
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form }}
+        <input class="btn btn-info" type="submit" value="Добавить пост"  style="margin: 10px">
+      </form>
+  </div>
 {% endblock content %}
