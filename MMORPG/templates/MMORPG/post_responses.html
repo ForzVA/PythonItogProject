@@ -42,20 +42,22 @@
 {% block js %}
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-      $('.update_status').click(function(){
-          if (confirm("Вы уверены?")){
-          var url = $(this).attr('data-url')
+    $('.update_status').click(function(){
+        if (confirm("Вы уверены?")){
+          var url = $(this).attr('data-url') 
+          console.log(url)
           var tag_td = $(this).parent().parent()
-
+          
           $.ajax({
-              url:url,
+              url: url,
               type: "GET",
               success: function(response){
+                  console.log(1)
                   console.log(tag_td.html())
                   tag_td.html(response)
                   }
                 })
-          }
-          })
+        }
+        })
   </script>
 {% endblock %}

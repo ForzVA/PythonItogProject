@@ -3,18 +3,19 @@
     <td style='vertical-align: middle;'>{{comment.user_comment}}</td>
     <td style='vertical-align: middle;'><a href="#" style="text-decoration: none;"> {{comment.text_comment}} </a></td>
     <td style='vertical-align: middle;'>{{comment.time_comment|date:'d.m.Y'}}</td>
-    <td style='vertical-align: middle;'>{% if comment.status_comment %}
-            <font style="border: 2px solid green; border-radius: 15px; padding: 2px 3px;">Опубликован</font>
-        {% else %}
-            <font style="border: 2px solid red; border-radius: 15px; padding: 2px 3px;">Скрыт</font>
-        {% endif %}
+    <td style='vertical-align: middle;'>
+      {% if comment.status_comment %}
+          <font style="border: 2px solid green; border-radius: 15px; padding: 2px 3px;">Опубликован</font>
+      {% else %}
+          <font style="border: 2px solid red; border-radius: 15px; padding: 2px 3px;">Скрыт</font>
+      {% endif %}
 
-  {% if status_comment %}
-    <div class="alert alert-success" style="padding: 5px; margin-top: 15px;">
-      {{status_comment}}
-    </div>
-  {% endif %}
-</td>
+      {% if status_comment %}
+        <div class="alert alert-success" style="padding: 5px; margin-top: 15px;">
+          {{status_comment}}
+        </div>
+      {% endif %}
+    </td>
 
-<td style="vertical-align: middle;"><a class="update_status btn btn-warning" href="#" data-url="{%url 'update_status_comment' comment.id 'public'%}">(Не)Показывать</a></td>
-<td style="vertical-align: middle;"><a class="update_status btn btn-warning" href="#" data-url="{%url 'update_status_comment' comment.id 'delete'%}">Удалить</a></td>
+    <td><a class="update_status btn btn-warning" href="#" data-url="{%url 'update_status_comment' comment.id 'public'%}">(Не)Показывать</a></td>
+    <td><a class="update_status btn btn-warning" href="#" data-url="{%url 'update_status_comment' comment.id 'delete'%}">Удалить</a></td>

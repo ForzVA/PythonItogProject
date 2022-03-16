@@ -4,6 +4,3 @@ __pycache__/
 **/__pycache__
 MMORPG/MMORPG/static/
 MMORPG/static_root/
-memory.txt
-static
-.gitignore
