@@ -163,3 +163,9 @@ EMAIL_HOST_USER = 'ma1ltest.mail'
 EMAIL_HOST_PASSWORD = 'csyprkmskwtbjcsk'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'ma1ltest.mail@yandex.by'
+
+CELERY_BROKER_URL = 'redis://:1qA6zltQhdxZSClW6cxZnc78zzokiJND@redis-10788.c263.us-east-1-2.ec2.cloud.redislabs.com:10788'
+CELERY_RESULT_BACKEND = 'redis://:1qA6zltQhdxZSClW6cxZnc78zzokiJND@redis-10788.c263.us-east-1-2.ec2.cloud.redislabs.com:10788'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
