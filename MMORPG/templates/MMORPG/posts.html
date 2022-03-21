@@ -9,7 +9,7 @@
   <div class="card-body text-dark">
     <h5 class="card-title display-6"><a href="{% url 'post_detail' post.id %}" style="text-decoration: none;"> {{post.title}} </a></h5>
       <hr>
-    <p class="card-text"><h5>{{post.text|truncatechars:128|safe}}</h5></p>
+    <p class="card-text"><h5>{{post.text|truncatechars:256|safe}}</h5></p>
   </div>
     <div class="card-header h6 bg-dark text-center text-light " style='border-bottom: 0px;'>
         Автор: <font color="yellow">{{ post.author }} </font> --
